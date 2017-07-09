@@ -1,23 +1,3 @@
-/*
-Welcome to the 60fps project! Your goal is to make Cam's Pizzeria website run
-jank-free at 60 frames per second.
-
-There are two major issues in this code that lead to sub-60fps performance. Can
-you spot and fix both?
-
-
-Built into the code, you'll find a few instances of the User Timing API
-(window.performance), which will be console.log()ing frame rate data into the
-browser console. To learn more about User Timing API, check out:
-http://www.html5rocks.com/en/tutorials/webperformance/usertiming/
-
-Creator:
-Cameron Pittman, Udacity Course Developer
-cameron *at* udacity *dot* com
-*/
-
-// As you may have realized, this website randomly generates pizzas.
-// Here are arrays of all possible pizza ingredients.
 var pizzaIngredients = {};
 pizzaIngredients.meats = [
   "Pepperoni",
@@ -406,6 +386,7 @@ var resizePizzas = function(size) {
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
+      // changed querySelector to getElementById to improve performance
         document.getElementById("pizzaSize").innerHTML = "Small";
         return;
       case "2":
@@ -450,6 +431,7 @@ var resizePizzas = function(size) {
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
     //replecement of querySelectorAll with getElementsByClassName
+    //removed calculation of dx and newWidth outside loop
     var pizzaBoxes = document.getElementsByClassName("randomPizzaContainer");
     var dx = determineDx(pizzaBoxes[0], size);
     var newWidth = (pizzaBoxes[0].offsetWidth + dx) + 'px';
@@ -471,6 +453,7 @@ window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
 for (var i = 2; i < 100; i++) {
+  //changed querySelector to getElementById to improve performance
   var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
@@ -535,6 +518,7 @@ document.addEventListener('DOMContentLoaded', function() {
   } else {
     numberOfPizzas = 20;
   }
+  //here 200 is replaced by numberOfPizzas .i.e. based upon screenwidth
   for (var i = 0; i < numberOfPizzas; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
@@ -543,6 +527,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    //querySelector replaced by getElementById to improve performance
     document.getElementById("movingPizzas1").appendChild(elem);
   }
   updatePositions();
