@@ -524,7 +524,18 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  var numPizzas = 0;
+  var winInnerWidth = window.innerWidth;
+  if (winInnerWidth >= 1200) {
+    numberOfPizzas = 68;
+  } else if (winInnerWidth >= 992){
+    numberOfPizzas = 50;
+  } else if (winInnerWidth >= 768) {
+    numberOfPizzas = 30;
+  } else {
+    numberOfPizzas = 20;
+  }
+  for (var i = 0; i < numberOfPizzas; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -532,7 +543,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    document.getElementById("movingPizzas1").appendChild(elem);
   }
   updatePositions();
 });
